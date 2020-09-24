@@ -1,0 +1,14 @@
+FROM {docker_base}
+
+USER root
+
+RUN apt update -y && \
+    apt upgrade -y && \
+    apt install -y debmake sudo {dependencies} &&  \
+    echo "%wheel ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    {groupadd}
+    {useradd}
+    mkdir -p /distropackager/build && \
+    chown -R {user}:wheel /distropackager
+
+USER {user}
