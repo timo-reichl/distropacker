@@ -6,7 +6,7 @@ RUN pacman --noconfirm -Syyu && \
     pacman --noconfirm -S base-devel sudo {dependencies} && \
     echo "%wheel ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     {useradd}
-    mkdir -p /distropackager && \
-    chown -R {user}:wheel /distropackager
+    mkdir -p /distropacker && \
+    chown -R {user}:wheel /distropacker
 
 USER {user}

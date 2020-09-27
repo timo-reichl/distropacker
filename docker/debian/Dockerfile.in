@@ -8,7 +8,7 @@ RUN apt update -y && \
     echo "%wheel ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     {groupadd}
     {useradd}
-    mkdir -p /distropackager/build && \
-    chown -R {user}:wheel /distropackager
+    mkdir -p /distropacker/build && \
+    chown -R {user}:wheel /distropacker
 
 USER {user}

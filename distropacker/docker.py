@@ -1,8 +1,8 @@
 
 import getpass
 
-from distropackager import root_dir
-from distropackager.process import ProcessContext
+from distropacker import root_dir
+from distropacker.process import ProcessContext
 
 
 class DockerImage(object):
@@ -55,7 +55,7 @@ class DockerImage(object):
             if tag != latest:
                 docker_base = self.with_tag(self.package.docker_base_tag, self.package.docker_base)
                 groupadd_string = "groupadd wheel && \\"
-                useradd_string = f"useradd -g wheel -d /distropackager {user} && \\"
+                useradd_string = f"useradd -g wheel -d /{root_dir.name} {user} && \\"
 
                 # Generate a Dockerfile.in from Dockerfile.in.in
                 self.generate_dockerfile(docker_base, user, dependencies, groupadd_string, useradd_string)

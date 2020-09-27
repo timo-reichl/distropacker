@@ -2,9 +2,9 @@
 from configobj import ConfigObj
 from pathlib import Path
 
-from distropackager import root_dir
-from distropackager.docker import DockerImage
-from distropackager.process import ProcessContext
+from distropacker import root_dir
+from distropacker.docker import DockerImage
+from distropacker.process import ProcessContext
 
 
 class DistroError(Exception):

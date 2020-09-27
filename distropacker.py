@@ -1,13 +1,13 @@
 from argparse import ArgumentParser
 from pathlib import Path
 
-from distropackager.package import DistroBaseNotFoundError
-from distropackager.package import DistroNotFoundError
-from distropackager.package import package_manager
+from distropacker.package import DistroBaseNotFoundError
+from distropacker.package import DistroNotFoundError
+from distropacker.package import package_manager
 
 
-# distropackager -b <build_dir> -d <distro list> --dependencies <dependencies_list> --tag <tag> --force <true/false>
-arg_parser = ArgumentParser("distropackager")
+# distropacker -b <build_dir> -d <distro list> --dependencies <dependencies_list> --tag <tag> --force <true/false>
+arg_parser = ArgumentParser("distropacker")
 # TODO: Figure out a uniform way to add build time dependencies (mapping files?)
 arg_parser.add_argument("--dependencies", type=str, nargs="+", help="Build time dependencies")
 arg_parser.add_argument("-t", "--tag", type=str, help="Docker image tag")
