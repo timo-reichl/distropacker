@@ -9,7 +9,7 @@ class DockerImage(object):
 
     def __init__(self, package):
         self.package = package
-        self.dockerfile = root_dir.parent.joinpath("docker", package.base_name, "Dockerfile")
+        self.dockerfile = root_dir.joinpath("docker", package.base_name, "Dockerfile")
 
     def generate_dockerfile(self, docker_base, user, dependencies, groupadd_string, useradd_string):
         with self.dockerfile.with_suffix(".in").open("r") as dockerfile_in_f:
@@ -31,6 +31,8 @@ class DockerImage(object):
 
         if tag is None:
             tag = latest
+        else:
+            tag = int(tag)
 
         if tag > latest:
             tag = latest
@@ -44,7 +46,7 @@ class DockerImage(object):
         # Remove image if we want a clean state for that tag
         if force:
             ProcessContext.execute(
-                f"docker image rm {image_name}",
+                f"docker image rm -f {image_name}",
                 run_dir=root_dir,
                 print_stdout=True
             )

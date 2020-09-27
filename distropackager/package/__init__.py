@@ -7,6 +7,21 @@ from distropackager.docker import DockerImage
 from distropackager.process import ProcessContext
 
 
+class DistroError(Exception):
+    def __init__(self, name):
+        super().__init__()
+
+        self.name = name
+
+
+class DistroNotFoundError(DistroError):
+    pass
+
+
+class DistroBaseNotFoundError(DistroError):
+    pass
+
+
 class Package(object):
     def __init__(self, info, build_dir):
         self.info = info
@@ -37,17 +52,33 @@ class PackageManager(object):
         self.ini = ConfigObj(ini_path)
 
     def get(self, name, build_dir):
-        info = dict(self.ini[name])
+        info = self.ini.get(name, None)
+
+        if info is None:
+            raise DistroNotFoundError(name)
+
         base = info.get("base", None)
 
         if base is not None:
-            base_info = dict(self.ini[base])
+            base_info = self.ini.get(base, None)
+
+            if base_info is None:
+                raise DistroBaseNotFoundError(base)
+
             base_info.update(info)
             del base_info["base"]
 
             info = base_info
 
         return Package(info, build_dir)
+
+    @property
+    def distros(self):
+        return list(self.ini.keys())
+
+    @property
+    def bases(self):
+        return [distro for distro, keys in self.ini.items() if "base" not in keys]
 
 
 package_manager = PackageManager(str(Path(__file__).parent.joinpath("data.ini")))
